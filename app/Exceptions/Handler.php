@@ -1,6 +1,6 @@
 <?php
 
-namespace IndianSuperLeague\Exceptions;
+namespace LodhaStarter\Exceptions;
 
 use Exception;
 use Illuminate\Validation\ValidationException;

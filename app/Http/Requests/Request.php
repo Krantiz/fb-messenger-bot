@@ -1,6 +1,6 @@
 <?php
 
-namespace IndianSuperLeague\Http\Requests;
+namespace LodhaStarter\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 

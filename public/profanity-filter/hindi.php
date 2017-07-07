@@ -1,0 +1,43 @@
+<?php
+
+/**
+ * PHP Array for English (UK) words
+ */
+array_push($badwords,
+	'satta',
+	'chod',
+	'chood',
+	'bhadwe',
+	'chodike',
+	'lund',
+	'chutiye',
+	'bhosdike',
+	'bhosdiwalle',
+	'randi',
+	'rundi',
+	'randy',
+	'mc',
+	'bc',
+	'maa ki aankh',
+	'laude',
+	'gandu',
+	'gaand',
+	'gand',
+	'kutti',
+	'choot',
+	'chut',
+	'jhaatu',
+	'harami',
+	'harambe',
+	'gudwa',
+	'baila',
+	'randve',
+	'biatch',
+	'chutspa',
+	'fudi',
+	'chinal',
+	'chomu',
+	'choko',
+	'lode',
+	'_|_'
+);

@@ -1,6 +1,6 @@
 <?php
 
-namespace IndianSuperLeague\Jobs;
+namespace LodhaStarter\Jobs;
 
 use Illuminate\Bus\Queueable;
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace IndianSuperLeague\Http\Controllers\Auth;
+namespace LodhaStarter\Http\Controllers\Auth;
 
-use IndianSuperLeague\Http\Controllers\Controller;
+use LodhaStarter\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 
 class PasswordController extends Controller

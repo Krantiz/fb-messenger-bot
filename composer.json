@@ -8,9 +8,12 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
         "guzzlehttp/guzzle": "^6.2",
-        "serverfireteam/panel": "^1.4",
+        "serverfireteam/panel": "1.4.*",
         "ramsey/uuid": "^3.4",
-        "doctrine/dbal": "^2.5"
+        "nesbot/carbon": "^1.21",
+        "aws/aws-sdk-php-laravel": "^3.1",
+        "intervention/image": "^2.3",
+        "snipe/banbuilder": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -24,7 +27,7 @@
             "database"
         ],
         "psr-4": {
-            "IndianSuperLeague\\": "app/"
+            "LodhaStarter\\": "app/"
         }
     },
     "autoload-dev": {

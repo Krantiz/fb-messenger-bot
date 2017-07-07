@@ -18,8 +18,3 @@ Route::get('/', function () {
 Route::group(array('prefix' => 'v1'), function() {
     Route::resource('webhook', 'WebhookController', ['only' => ['index', 'store']]);
 });
-
-Route::group(array('prefix' => 'panel'), function() {
-    Route::resource('sync', 'ApiaiEntityController', ['only' => ['store']]);
-});
-

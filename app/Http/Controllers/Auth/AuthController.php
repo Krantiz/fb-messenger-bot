@@ -1,10 +1,10 @@
 <?php
 
-namespace IndianSuperLeague\Http\Controllers\Auth;
+namespace LodhaStarter\Http\Controllers\Auth;
 
-use IndianSuperLeague\User;
+use LodhaStarter\User;
 use Validator;
-use IndianSuperLeague\Http\Controllers\Controller;
+use LodhaStarter\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 

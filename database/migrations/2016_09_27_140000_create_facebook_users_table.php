@@ -13,8 +13,7 @@ class CreateFacebookUsersTable extends Migration
     public function up()
     {
         Schema::create('facebook_users', function (Blueprint $table) { 
-            $table->increments('id');
-            $table->string('user_id')->unique();
+            $table->uuid('id');
             $table->string('first_name');
             $table->string('last_name');
             $table->string('profile_pic');
@@ -22,6 +21,10 @@ class CreateFacebookUsersTable extends Migration
             $table->string('timezone');
             $table->string('gender');
             $table->timestamps();
+        });
+
+        Schema::table('facebook_users', function($table) {
+            $table->primary('id');
         });
     }
 

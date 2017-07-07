@@ -1,6 +1,6 @@
 <?php
 
-namespace IndianSuperLeague;
+namespace LodhaStarter;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,7 +9,7 @@ class ApiaiResponse extends Model
 	protected $fillable = ['facebook_request_id', 'action_incomplete', 'action', 'parameters', 'fulfillment', 'intent_name'];
     protected $table = 'apiai_responses';
 
-    public static $custom_action_namespace = 'indiansuperleague';
+    public static $custom_action_namespace = 'lodha';
 
     public function hasIntentName() {
         return !empty($this->intent_name);
@@ -26,7 +26,6 @@ class ApiaiResponse extends Model
 
     public function hasFulfillment() {
         $fulfillment = json_decode($this->fulfillment, true);
-        \Log::info($fulfillment);
-        return !in_array(null, $fulfillment);//!empty($fulfillment);
+        return !empty($fulfillment) && !in_array(null, $fulfillment);
     }
 }

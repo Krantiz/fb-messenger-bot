@@ -1,6 +1,6 @@
 <?php
 
-namespace IndianSuperLeague\Providers;
+namespace LodhaStarter\Providers;
 
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -13,8 +13,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'IndianSuperLeague\Events\SomeEvent' => [
-            'IndianSuperLeague\Listeners\EventListener',
+        'LodhaStarter\Events\SomeEvent' => [
+            'LodhaStarter\Listeners\EventListener',
         ],
     ];
 

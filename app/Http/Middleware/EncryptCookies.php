@@ -1,6 +1,6 @@
 <?php
 
-namespace IndianSuperLeague\Http\Middleware;
+namespace LodhaStarter\Http\Middleware;
 
 use Illuminate\Cookie\Middleware\EncryptCookies as BaseEncrypter;
 

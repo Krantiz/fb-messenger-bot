@@ -1,39 +1,49 @@
 <?php
 
-namespace IndianSuperLeague\Http\Controllers;
+namespace LodhaStarter\Http\Controllers;
 
 use Illuminate\Http\Request;
-use IndianSuperLeague\FacebookRequest;
-use IndianSuperLeague\FacebookUser;
+use LodhaStarter\FacebookRequest;
+use LodhaStarter\FacebookUser;
 use Illuminate\Support\Facades\Log;
 use DB;
 
-use IndianSuperLeague\Http\Requests;
+use LodhaStarter\Http\Requests;
 
 class FacebookUserController extends Controller
 {
 
-    public static function storeFacebookUsers($facebook_requests)
+    public static function storeFacebookUsers($request)
     {
 
         $facebook_users = collect();
+        $entry = $request['entry'][0];
 
-        foreach($facebook_requests as $facebook_request) {
-            $facebook_user = FacebookUser::findByUserId($facebook_request->sender_id);
-            if(empty($facebook_user)) {
-                $user_info = FacebookUser::fetchUser($facebook_request->sender_id);
-                $facebook_user = new FacebookUser([
-                    'user_id'       => $facebook_request->sender_id,
-                    'first_name'    => $user_info->first_name,
-                    'last_name'     => $user_info->last_name,
-                    'profile_pic'   => $user_info->profile_pic,
-                    'timezone'      => $user_info->timezone,
-                    'locale'        => $user_info->locale,
-                    'gender'        => $user_info->gender
-                ]);
-                $facebook_user->save();
-                $facebook_users->push($facebook_user);
-            }   
+        if(!is_null($entry)) {
+            foreach ($entry['messaging'] as $messaging) {
+
+                $facebook_user = FacebookUser::findByUserId($messaging['sender']['id']);
+                
+                if(empty($facebook_user)) {
+                    $user_info = FacebookUser::fetchUser($messaging['sender']['id']);
+                    $facebook_user = new FacebookUser([
+                        'id'            => $messaging['sender']['id'],
+                        'first_name'    => $user_info->first_name,
+                        'last_name'     => $user_info->last_name,
+                        'profile_pic'   => $user_info->profile_pic,
+                        'timezone'      => $user_info->timezone,
+                        'locale'        => $user_info->locale
+                    ]);
+                    if(!empty($user_info->gender)) {
+                        $facebook_user->gender = $user_info->gender;
+                    }else {
+                        $facebook_user->gender = 'unavailable';
+                    }
+                    \Log::info($facebook_user);
+                    $facebook_user->save();
+                    $facebook_users->push($facebook_user);
+                }
+            }
         }
 
         return $facebook_users;

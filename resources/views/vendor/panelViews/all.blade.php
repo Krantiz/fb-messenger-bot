@@ -1,8 +1,6 @@
 @extends('panelViews::mainTemplate')
 @section('page-wrapper')
 
-<script src="{{ asset('js/sync.js') }}"></script>
-<script src="{{ asset('js/jquery.min.js') }}"></script>
 
 {!! $filter !!}
 
@@ -10,16 +8,6 @@
 <a href="{!! url('panel/'.$current_entity.'/export/excel') !!}" class="btn btn-info">{!! \Lang::get('panel::fields.exportAsExcel') !!}</a>
 
 <button class="btn btn-warning" data-toggle="modal" data-target="#import_modal">{!! \Lang::get('panel::fields.importData') !!}</button>
-
-<?php 
-	$entity_list = ['Player','Team'];
-
-	if(in_array($current_entity, $entity_list)) { ?> 
-
-		<a id="sync" class="btn btn-primary" data-entity="<?php echo $current_entity;?>">Sync</a>
-		<span id="status" style="padding-left:5px;color:grey;font-style:italic;font-weight:bold;"></span>
-
-<?php } ?>
 
 <!-- Modal -->
 <div class="modal fade" id="import_modal" tabindex="-1" role="dialog" aria-labelledby="import_modal_label" aria-hidden="true">

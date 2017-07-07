@@ -151,11 +151,15 @@ return [
         /*
          * Application Service Providers...
          */
-        IndianSuperLeague\Providers\AppServiceProvider::class,
-        IndianSuperLeague\Providers\AuthServiceProvider::class,
-        IndianSuperLeague\Providers\EventServiceProvider::class,
-        IndianSuperLeague\Providers\RouteServiceProvider::class,
-        Serverfireteam\Panel\PanelServiceProvider::class
+        LodhaStarter\Providers\AppServiceProvider::class,
+        LodhaStarter\Providers\AuthServiceProvider::class,
+        LodhaStarter\Providers\EventServiceProvider::class,
+        LodhaStarter\Providers\RouteServiceProvider::class,
+
+        /*
+         * Plugin Service Providers...
+         */
+        Serverfireteam\Panel\PanelServiceProvider::class,
 
     ],
 

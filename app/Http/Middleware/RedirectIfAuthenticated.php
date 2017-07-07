@@ -1,6 +1,6 @@
 <?php
 
-namespace IndianSuperLeague\Http\Middleware;
+namespace LodhaStarter\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;

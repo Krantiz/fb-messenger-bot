@@ -28,17 +28,17 @@ $app = new Illuminate\Foundation\Application(
 
 $app->singleton(
     Illuminate\Contracts\Http\Kernel::class,
-    IndianSuperLeague\Http\Kernel::class
+    LodhaStarter\Http\Kernel::class
 );
 
 $app->singleton(
     Illuminate\Contracts\Console\Kernel::class,
-    IndianSuperLeague\Console\Kernel::class
+    LodhaStarter\Console\Kernel::class
 );
 
 $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
-    IndianSuperLeague\Exceptions\Handler::class
+    LodhaStarter\Exceptions\Handler::class
 );
 
 /*

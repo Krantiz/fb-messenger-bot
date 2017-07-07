@@ -1,6 +1,6 @@
 <?php
 
-namespace IndianSuperLeague\Providers;
+namespace LodhaStarter\Providers;
 
 use Illuminate\Support\ServiceProvider;
 

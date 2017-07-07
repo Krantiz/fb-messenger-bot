@@ -11,7 +11,7 @@
 |
 */
 
-$factory->define(IndianSuperLeague\User::class, function (Faker\Generator $faker) {
+$factory->define(LodhaStarter\User::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->safeEmail,

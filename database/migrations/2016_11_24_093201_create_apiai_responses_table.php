@@ -14,12 +14,13 @@ class CreateApiaiResponsesTable extends Migration
     {
         Schema::create('apiai_responses', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('facebook_request_id')->unsigned();
-            $table->boolean('action_incomplete')->nullable();
+            $table->uuid('msg_id')->nullable();;
+            $table->string('action_incomplete')->nullable();
             $table->string('action')->nullable();
             $table->text('parameters')->nullable();
             $table->text('fulfillment')->nullable();
-            $table->string('intent_name')->nullable();
+            $table->text('intent_name')->nullable();
+            $table->integer('facebook_request_id')->unsigned();
             $table->timestamps();
         });
 

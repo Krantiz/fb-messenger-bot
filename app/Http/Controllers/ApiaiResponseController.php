@@ -1,28 +1,28 @@
 <?php
 
-namespace IndianSuperLeague\Http\Controllers;
+namespace LodhaStarter\Http\Controllers;
 
 use Illuminate\Http\Request;
-use IndianSuperLeague\ApiaiResponse;
+use LodhaStarter\ApiaiResponse;
 use Illuminate\Support\Facades\Log;
 use DB;
-
-use IndianSuperLeague\Http\Requests;
+use LodhaStarter\Http\Controllers\DynamoDbController;
+use LodhaStarter\Http\Requests;
 
 class ApiaiResponseController extends Controller
 {
     public static function storeApiaiResponse($raw_apiai_response, $facebook_request)
     {
 
-        $result = $raw_apiai_response->result;
+        $action = null;
+        $action_incomplete = null;
+        $parameters = null;
+        $fulfillment = null;
+        $intent_name = null;
 
-        if(!is_null($result)) {
+        if(!empty($raw_apiai_response) && property_exists($raw_apiai_response, 'result')) {
 
-            $action = null;
-            $action_incomplete = null;
-            $parameters = null;
-            $fulfillment = null;
-            $intent_name = null;
+            $result = $raw_apiai_response->result;
 
             if(property_exists($result, 'action')) {
                 $action = $result->action;   
@@ -44,7 +44,12 @@ class ApiaiResponseController extends Controller
                 $intent_name  = $result->metadata->intentName;   
             }
 
-            $apiai_response = new ApiaiResponse([ 
+            
+        }else {
+            $fulfillment  = "Pardon me, what was that again?";
+        }
+
+        $apiai_response = new ApiaiResponse([ 
                 'facebook_request_id'       => $facebook_request->id, 
                 'action'                    => $action, 
                 'action_incomplete'         => $action_incomplete,
@@ -52,13 +57,14 @@ class ApiaiResponseController extends Controller
                 'fulfillment'               => $fulfillment,
                 'intent_name'               => $intent_name
             ]);
-            $apiai_response->save();
 
-            Log::info('========= ApiaiResponse - START =============');
-            Log::info($apiai_response);
-            Log::info('========= ApiaiResponse - END =============');
+        $apiai_response->save();
 
-            return $apiai_response;
-        }
+        //DynamoDbController::apiai_response($apiai_response);
+        Log::info('========= ApiaiResponse - START =============');
+        Log::info($apiai_response);
+        Log::info('========= ApiaiResponse - END =============');
+
+        return $apiai_response;
     }
 }

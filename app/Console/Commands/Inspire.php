@@ -1,6 +1,6 @@
 <?php
 
-namespace IndianSuperLeague\Console\Commands;
+namespace LodhaStarter\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Inspiring;

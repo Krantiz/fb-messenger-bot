@@ -67,7 +67,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => IndianSuperLeague\User::class,
+            'model' => LodhaStarter\User::class,
         ],
 
         // 'users' => [

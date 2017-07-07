@@ -1,6 +1,6 @@
 <?php
 
-namespace IndianSuperLeague\Http;
+namespace LodhaStarter\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -24,11 +24,11 @@ class Kernel extends HttpKernel
      */
     protected $middlewareGroups = [
         'web' => [
-            \IndianSuperLeague\Http\Middleware\EncryptCookies::class,
+            \LodhaStarter\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-            // \IndianSuperLeague\Http\Middleware\VerifyCsrfToken::class,
+            // \LodhaStarter\Http\Middleware\VerifyCsrfToken::class,
         ],
 
         'api' => [
@@ -44,10 +44,10 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => \IndianSuperLeague\Http\Middleware\Authenticate::class,
+        'auth' => \LodhaStarter\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'can' => \Illuminate\Foundation\Http\Middleware\Authorize::class,
-        'guest' => \IndianSuperLeague\Http\Middleware\RedirectIfAuthenticated::class,
+        'guest' => \LodhaStarter\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
     ];
 }

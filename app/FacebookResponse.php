@@ -1,6 +1,6 @@
 <?php
 
-namespace IndianSuperLeague;
+namespace LodhaStarter;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
@@ -10,17 +10,18 @@ use Config;
 class FacebookResponse extends Model
 {
     protected static $client;
-    protected $fillable = ['text', 'image', 'buttons', 'collections', 'facebook_request_id'];
+    protected $fillable = ['text', 'image', 'buttons', 'video', 'quick_replies', 'collections', 'facebook_request_id'];
     protected $table = 'facebook_responses';
 
     public static function init() {
         self::$client = new Client([
-            'base_uri'  => 'https://graph.facebook.com/v2.6/'
+            'base_uri'  => 'https://graph.facebook.com/v2.6/',
+            'verify'    => env('SSL_VERIFY_FLAG', true)
         ]);
     }
 
     public function facebookRequest() {    
-        return $this->belongsTo('IndianSuperLeague\FacebookRequest');
+        return $this->belongsTo('LodhaStarter\FacebookRequest');
     }
 
     public function sendFacebookMessage() {
@@ -35,7 +36,7 @@ class FacebookResponse extends Model
             ],
             'json' => [
                 'recipient' => [
-                    'id' => $this->facebookRequest->sender_id
+                    'id' => $this->facebookRequest->facebook_user_id
                 ],
                 'message' => $this->formFacebookMessage()
             ]
@@ -71,6 +72,11 @@ class FacebookResponse extends Model
                     ]
                 ]
             ];
+        }  else if(!empty($this->quick_replies)) {
+            $message = [
+                'text' => $this->quick_replies['text'],
+                'quick_replies' => $this->quick_replies['replies']
+            ];
         } else if(!empty($this->collections)) {
             $message = [
                 'attachment' => [
@@ -81,10 +87,20 @@ class FacebookResponse extends Model
                     ]
                 ]
             ];
+        } else if(!empty($this->video)) {
+            Log::info('========= PROCESS FB REQUEST =============');
+            Log::info($this->video);
+            $message = [
+                'attachment' => [
+                    'type' => 'video',
+                    'payload' => [
+                        'url' => $this->video
+                    ]
+                ]
+            ];
         }
 
         return $message;
-
     }
 
     public static function processTexts($texts, $facebook_request) {
@@ -109,7 +125,6 @@ class FacebookResponse extends Model
                         $split_text = $split_text . '-';
                     }
                 }
-
                 $facebook_response = new FacebookResponse([
                     'facebook_request_id'   => $facebook_request->id,
                     'text'                  => $split_text
@@ -149,7 +164,7 @@ class FacebookResponse extends Model
     }
 
     public static function processCollections($collections, $facebook_request) {
-       $collection_chunks = array_chunk($collections, 10);
+        $collection_chunks = array_chunk($collections, 10);
         $facebook_responses = collect();
         foreach ($collection_chunks as $chunk) {
             $facebook_response = new FacebookResponse([
@@ -160,6 +175,20 @@ class FacebookResponse extends Model
         }
 
         return $facebook_responses;
+    }
+
+    public static function processQuickReplies($quick_replies, $facebook_request) {
+        return new FacebookResponse([
+            'facebook_request_id'   => $facebook_request->id,
+            'quick_replies'         => $quick_replies
+        ]);
+    }
+
+    public static function processVideo($video_link, $facebook_request) {
+        return new FacebookResponse([
+            'facebook_request_id'   => $facebook_request->id,
+            'video'         => $video_link[0]
+        ]);
     }
 
     public static function processData($data, $facebook_request, $is_fulfillment = false) {
@@ -174,30 +203,61 @@ class FacebookResponse extends Model
 
         } else {
 
-            if(!empty($data['texts'])) {
-                foreach(self::processTexts($data['texts'], $facebook_request) as $facebook_response) {
-                    $facebook_responses->push($facebook_response);
-                }
-            }
-            
-            if(!empty($data['images'])) {
-                foreach(self::processImages($data['images'], $facebook_request) as $facebook_response) {
-                    $facebook_responses->push($facebook_response);
-                }
-            }
+            foreach($data as $key => $chunk) {
 
-            if(!empty($data['textWithLinks'])) {
-                $facebook_responses->push(self::processTextWithLinks($data['textWithLinks'], $facebook_request));
-            }
-
-            if(!empty($data['collections'])) {
-                foreach(self::processCollections($data['collections'], $facebook_request) as $facebook_response) {
-                    $facebook_responses->push($facebook_response);
+                if($key == 'texts') {
+                    foreach(self::processTexts($chunk, $facebook_request) as $facebook_response) {
+                        $facebook_responses->push($facebook_response);
+                    }
                 }
+
+                if($key == 'quick_replies') {
+                    $facebook_responses->push(self::processQuickReplies($chunk, $facebook_request));
+                }
+
+                if($key == 'images') {
+                    foreach(self::processImages($chunk, $facebook_request) as $facebook_response) {
+                        $facebook_responses->push($facebook_response);
+                    }
+                }
+
+                if($key == 'collections') {
+                    foreach(self::processCollections($chunk, $facebook_request) as $facebook_response) {
+                        $facebook_responses->push($facebook_response);
+                    }
+                }
+
+                if($key == 'textWithLinks') {
+                    $facebook_responses->push(self::processTextWithLinks($chunk, $facebook_request));
+                }
+
+                if($key == 'video') {
+                    $facebook_responses->push(self::processVideo($chunk, $facebook_request));
+                }
+
             }
 
         }
 
         return $facebook_responses;
+    }
+
+    public static function eligibleForQuickReplies($response, $action) {
+        return !empty($response) && !array_key_exists('quick_replies', $response->toArray()) && !in_array($action, Config::get('services.facebook.skip_actions'));
+    }
+
+    public static function genericQuickReplies($request_id) {
+
+        return new FacebookResponse([
+            'facebook_request_id'   => $request_id,
+            'quick_replies' => [
+                'text' => Config::get('services.facebook.generic_quick_reply_texts')[array_rand(Config::get('services.facebook.generic_quick_reply_texts'))],
+                'replies' => Config::get('services.facebook.generic_quick_replies')
+            ]
+        ]);
+    }
+
+    public function hasQuickReplies(){
+        return array_key_exists('quick_replies', $this->toArray());
     }
 }

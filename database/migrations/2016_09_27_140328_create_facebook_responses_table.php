@@ -18,6 +18,8 @@ class CreateFacebookResponsesTable extends Migration
             $table->string('text');
             $table->string('image');
             $table->string('buttons');
+            $table->string('video');
+            $table->string('quick_replies');
             $table->string('collections');
             $table->timestamps();
         });

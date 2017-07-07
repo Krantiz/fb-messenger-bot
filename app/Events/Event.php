@@ -1,6 +1,6 @@
 <?php
 
-namespace IndianSuperLeague\Events;
+namespace LodhaStarter\Events;
 
 abstract class Event
 {
