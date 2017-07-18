@@ -1,5 +1,12 @@
 <?php
 
+define('RDS_HOSTNAME', $_SERVER['RDS_HOSTNAME']);
+define('RDS_USERNAME', $_SERVER['RDS_USERNAME']);
+define('RDS_PASSWORD', $_SERVER['RDS_PASSWORD']);
+define('RDS_DB_NAME', $_SERVER['RDS_DB_NAME']);
+
+
+
 return [
 
     /*
@@ -54,10 +61,10 @@ return [
 
         'mysql' => [
             'driver'    => 'mysql',
-            'host'      => env('DB_HOST') ?: (isset($_SERVER['RDS_HOSTNAME']) ? $_SERVER['RDS_HOSTNAME'] : 'localhost'),
-            'database'  => env('DB_DATABASE') ?: (isset($_SERVER['RDS_DB_NAME']) ? $_SERVER['RDS_DB_NAME'] : 'indiansuperleague'),
-            'username'  => env('DB_USERNAME') ?: 'fcgoaofficial',
-            'password'  => env('DB_PASSWORD') ?: (isset($_SERVER['RDS_PASSWORD']) ? $_SERVER['RDS_PASSWORD'] : ''),
+            'host'      => 'RDS_HOSTNAME',
+            'database'  => 'RDS_DB_NAME',
+            'username'  => 'RDS_USERNAME',
+            'password'  => 'RDS_PASSWORD',
             'port'      => env('DB_PORT') ?: (isset($_SERVER['RDS_PORT']) ? $_SERVER['RDS_PORT'] : 3306),
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',

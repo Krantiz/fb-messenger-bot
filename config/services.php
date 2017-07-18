@@ -57,50 +57,45 @@ return [
         'generic_quick_replies' => [
             [
                 "content_type" => "text",
-                "title" => "About Lodha",
-                "payload" => "lodha.about_company"
+                "title" => "About GPITS",
+                "payload" => "gpit.about"
             ],
             [
                 "content_type" => "text",
-                "title" => "Inside Lodha",
-                "payload" => 'lodha.about_team'
-            ],
-            [
-                "content_type" => "text",
-                "title" => "Contact Lodha",
-                "payload" => 'lodha.about_customer_contact'
-            ],
-            [
-                "content_type" => "text",
-                "title" => "Buy Home",
-                "payload" => 'lodha.contact_form'
+                "title" => "Contact Us",
+                "payload" => 'gpit.contactus'
             ],
             [
                 "content_type" => "text",
                 "title" => "Join Us",
-                "payload" => "lodha.join_company"
+                "payload" => 'gpit.career'
             ],
             [
                 "content_type" => "text",
-                "title" => "Who are you?",
-                "payload" => "lodha.smalltalk_about_bot"
+                "title" => "Our Team",
+                "payload" => 'gpit.our_team'
             ],
             [
                 "content_type" => "text",
-                "title" => "Vision & Mission",
-                "payload" => "lodha.about_mission"
+                "title" => "Services",
+                "payload" => 'gpit.products'
             ],
             [
                 "content_type" => "text",
-                "title" => "(y)",
+                "title" => "Clients",
+                "payload" => 'gpit.testimonials'
+            ],
+            [
+                "content_type" => "text",
+                "title" => "👍",
                 "payload" => collect(['action' => 'lodha.user_feedback', 'feedback' => 'Good'])->toJson(),
-                "image_url" => "https://scontent.xx.fbcdn.net/t39.1997-6/851557_369239266556155_759568595_n.png?_nc_ad=z-m"
+                "image_url" => ""
             ],
             [
                 "content_type" => "text",
                 "title" => "👎",
                 "payload" => collect(['action' => 'lodha.user_feedback', 'feedback' => 'Bad'])->toJson(),
-                "image_url" => "https://image.freepik.com/free-icon/thumbs-down-silhouette_318-41911.png"
+                "image_url" => ""
             ]
         ],
         'city_quick_replies' => [

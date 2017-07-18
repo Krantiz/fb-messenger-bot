@@ -88,7 +88,7 @@ class WebhookController extends Controller
 
                 $facebook_response = new FacebookResponse([
                     'facebook_request_id'   => $facebook_request->id,
-                    'text'                  => "Hello {$user->first_name}, I am Bob. An agent that will be helping you find your dream home :)."
+                    'text'                  => "Hello {$user->first_name}, I am Bob. An agent that will be helping you in finding the information about Great Place IT servcies"
                 ]);
                 $facebook_responses->push($facebook_response);
 
